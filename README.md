@@ -78,22 +78,13 @@ For example, if `RxCocoa` is declared as a prebuilt pod using the `:binary => tr
 
 We provided some command line interfaces (CLI):
 
-- Fetch from cache repo
+- Fetch from cache repo, use Envirement (ARTIFACTORY_LOGIN, ARTIFACTORY_PASSWORD) to cofigure credentionals or it will be promted to user
 ```sh
 $ bundle exec pod binary fetch
 ```
-- Prebuild binary pods
+- Prebuild binary pods, use Envirement (ARTIFACTORY_LOGIN, ARTIFACTORY_PASSWORD) to cofigure credentionals, after prebuild it will be pushed automaticly
 ```sh
 $ bundle exec pod binary prebuild
-```
-- Push the prebuilt pods to the cache repo
-```sh
-$ bundle exec pod binary push
-```
-
-For each command, you can run with option `--help` for more details about how to use each:
-```sh
-$ bundle exec pod binary fetch --help
 ```
 
 ### 4. A trivial workflow
