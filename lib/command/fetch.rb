@@ -10,7 +10,7 @@ module Pod
           super
           unless ENV['ARTIFACTORY_LOGIN'].nil? && ENV['ARTIFACTORY_PASSWORD'].nil?
             update_cli_config(
-              :artifactory_login => ENV['CI_ARTIFACTORY_LOGIN'],
+              :artifactory_login => ENV['ARTIFACTORY_LOGIN'],
               :artifactory_password => ENV['ARTIFACTORY_PASSWORD']
             )
           else
