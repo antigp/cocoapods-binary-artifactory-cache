@@ -1,5 +1,5 @@
 require_relative "executor/prebuilder"
-require_relative "../cocoapods-binary-cache/pod-binary/prebuild_dsl"
+require_relative "../cocoapods-binary-artifactory-cache/pod-binary/prebuild_dsl"
 
 module Pod
   class Command
@@ -12,8 +12,6 @@ module Pod
           [
             ["--config", "Config (Debug, Test...) to prebuild"],
             ["--repo-update", "Update pod repo before installing"],
-            ["--no-fetch", "Do not perform a cache fetch beforehand"],
-            ["--push", "Push cache to repo upon completion"],
             ["--all", "Prebuild all binary pods regardless of cache validation"],
             ["--targets", "Targets to prebuild. Use comma (,) to specify a list of targets"]
           ].concat(super)
@@ -21,6 +19,15 @@ module Pod
 
         def initialize(argv)
           super
+          unless ENV['ARTIFACTORY_LOGIN'].nil? && ENV['ARTIFACTORY_PASSWORD'].nil?
+            update_cli_config(
+              :artifactory_login => ENV['CI_ARTIFACTORY_LOGIN'],
+              :artifactory_password => ENV['ARTIFACTORY_PASSWORD']
+            )
+          else
+            Pod::UI.puts "Please configure ARTIFACTORY_LOGIN and ARTIFACTORY_PASSWORD envirement to use prebuild".red
+            exit
+          end
           prebuild_all_pods = argv.flag?("all")
           prebuild_targets = argv.option("targets", "").split(",")
           update_cli_config(
@@ -31,10 +38,7 @@ module Pod
           update_cli_config(:prebuild_targets => prebuild_targets) unless prebuild_all_pods
           @prebuilder = PodPrebuild::CachePrebuilder.new(
             config: prebuild_config,
-            cache_branch: argv.shift_argument || "master",
-            repo_update: argv.flag?("repo-update"),
-            no_fetch: argv.flag?("fetch") == false,
-            push_cache: argv.flag?("push")
+            repo_update: argv.flag?("repo-update")
           )
         end
 

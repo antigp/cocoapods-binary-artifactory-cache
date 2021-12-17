@@ -2,7 +2,6 @@ require "fileutils"
 require_relative "config"
 require_relative "fetch"
 require_relative "prebuild"
-require_relative "push"
 require_relative "visualize"
 
 module Pod

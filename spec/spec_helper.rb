@@ -1,6 +1,6 @@
 require "cocoapods-core"
 require "cocoapods"
-require "cocoapods-binary-cache"
+require "cocoapods-binary-artifactory-cache"
 require "cocoapods_plugin"
 
 require_relative "spec_helper/lockfile"

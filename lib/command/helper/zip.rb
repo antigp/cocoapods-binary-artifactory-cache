@@ -1,8 +1,13 @@
 module PodPrebuild
   module ZipUtils
-    def self.zip(path, to_dir: nil)
+    def self.zip(path, to_dir: nil, name: nil)
       basename = File.basename(path)
-      out_path = to_dir.nil? ? "#{basename}.zip" : "#{to_dir}/#{basename}.zip"
+      toname = name.nil? ? basename : name
+      unless to_dir.nil? 
+        FileUtils.mkdir_p(to_dir)
+      end
+      
+      out_path = to_dir.nil? ? "#{toname}.zip" : "#{to_dir}/#{toname}.zip"
       cmd = []
       cmd << "cd" << File.dirname(path)
       cmd << "&& zip -r --symlinks" << out_path << basename

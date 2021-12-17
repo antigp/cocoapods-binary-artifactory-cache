@@ -5,13 +5,13 @@ lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name          = "cocoapods-binary-cache"
+  spec.name          = "cocoapods-binary-artifactory-cache"
   spec.version       = File.read("VERSION")
-  spec.authors       = ["Bang Nguyen"]
-  spec.email         = ["bang.nguyen@grabtaxi.com"]
-  spec.description   = "Reduce build time by building pod frameworks and cache to remote storage, reuse on multiple machines"
-  spec.summary       = "Reduce build time by building pod frameworks and cache to remote storage, reuse on multiple machines"
-  spec.homepage      = "https://github.com/grab/cocoapods-binary-cache"
+  spec.authors       = ["Eugene Antropov"]
+  spec.email         = ["e@antropov.it"]
+  spec.description   = "Reduce build time by building pod frameworks and cache it in artifactory storage"
+  spec.summary       = "Reduce build time by building pod frameworks and cache it in artifactory storage"
+  spec.homepage      = "https://github.com/antigp/cocoapods-binary-artifactory-cache"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"]

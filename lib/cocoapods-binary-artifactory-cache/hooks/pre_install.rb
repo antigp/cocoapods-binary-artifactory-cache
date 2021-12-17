@@ -48,11 +48,11 @@ module PodPrebuild
     def ensure_valid_podfile
       podfile.target_definition_list.each do |target_definition|
         next if target_definition.explicit_prebuilt_pod_names.empty?
-        raise "cocoapods-binary-cache requires `use_frameworks!`" unless target_definition.uses_frameworks?
+        raise "cocoapods-binary-artifactory-cache requires `use_frameworks!`" unless target_definition.uses_frameworks?
       end
     end
 
-    def create_prebuild_sandbox
+    def create_prebuild_sandbox      
       @prebuild_sandbox = Pod::PrebuildSandbox.from_standard_sandbox(standard_sandbox)
       Pod::UI.message "Create prebuild sandbox at #{@prebuild_sandbox.root}"
     end

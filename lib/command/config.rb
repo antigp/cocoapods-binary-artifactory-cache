@@ -1,4 +1,4 @@
-require_relative "../cocoapods-binary-cache/helper/json"
+require_relative "../cocoapods-binary-artifactory-cache/helper/json"
 
 module PodPrebuild
   def self.config
@@ -85,6 +85,10 @@ module PodPrebuild
       @cli_config[:prebuild_job] || @dsl_config[:prebuild_job]
     end
 
+    def fetch_job?
+      @cli_config[:fetch_job] || @dsl_config[:fetch_job]
+    end
+
     def prebuild_all_pods?
       @cli_config[:prebuild_all_pods] || @dsl_config[:prebuild_all_pods]
     end
@@ -165,6 +169,14 @@ module PodPrebuild
       prebuilt_pod_names - excluded_pods
     end
 
+    def artifactory_login
+      @cli_config[:artifactory_login]
+    end
+
+    def artifactory_password
+      @cli_config[:artifactory_password]
+    end
+
     private
 
     def applicable_dsl_config
@@ -174,6 +186,7 @@ module PodPrebuild
         :prebuild_delta_path,
         :prebuild_config,
         :prebuild_job,
+        :fetch_job,
         :prebuild_all_pods,
         :excluded_pods,
         :dev_pods_enabled,

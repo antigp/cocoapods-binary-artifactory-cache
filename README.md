@@ -1,10 +1,10 @@
 # CocoaPods binary cache
 
-[![Test](https://img.shields.io/github/workflow/status/grab/cocoapods-binary-cache/test)](https://img.shields.io/github/workflow/status/grab/cocoapods-binary-cache/test)
+[![Test](https://img.shields.io/github/workflow/status/antigp/cocoapods-binary-artifactory-cache/test)](https://img.shields.io/github/workflow/status/antigp/cocoapods-binary-artifactory-cache/test)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat&color=blue)](https://github.com/grab/cocoapods-binary-cache/blob/master/LICENSE)
-[![Gem](https://img.shields.io/gem/v/cocoapods-binary-cache.svg?style=flat&color=blue)](https://rubygems.org/gems/cocoapods-binary-cache)
+[![Gem](https://img.shields.io/gem/v/cocoapods-binary-artifactory-cache.svg?style=flat&color=blue)](https://rubygems.org/gems/cocoapods-binary-artifactory-cache)
 
-A plugin that helps to reduce the build time of Xcode projects which use CocoaPods by prebuilding pod frameworks and cache them in a remote repository to share across multiple machines.
+A plugin that helps to reduce the build time of Xcode projects which use CocoaPods by prebuilding pod frameworks and cache them in a artifactory storage. Based on gem `cocoapods-remote-cache`. Support cache multiple version of dependicies stored in cache, instead of `cocoapods-remote-cache`.
 
 ## Installation
 
@@ -15,11 +15,7 @@ Requirements
 
 ### Via [Bundler](https://bundler.io/)
 
-Add the gem `cocoapods-binary-cache` to the `Gemfile` of your project.
-
-```rb
-gem "cocoapods-binary-cache", :git => "https://github.com/grab/cocoapods-binary-cache.git", :tag => "0.1.11"
-```
+Add the gem `cocoapods-binary-artifactory-cache` to the `Gemfile` of your project.
 
 Then, run `bundle install` to install the added gem.
 
@@ -28,7 +24,7 @@ In case you're not familiar with [`bundler`](https://bundler.io/), take a look a
 ### Via [RubyGems](https://rubygems.org/)
 
 ```sh
-$ gem install cocoapods-binary-cache
+$ gem install cocoapods-binary-artifactory-cache
 ```
 
 ## How it works
@@ -43,12 +39,12 @@ First of all, create a git repo that will be used as a storage of your prebuilt 
 
 ### 2. Configure Podfile
 
-**2.1. Load the `cocoapods-binary-cache` plugin.**
+**2.1. Load the `cocoapods-binary-artifactory-cache` plugin.**
 
 Add the following line at the beginning of Podfile:
 
 ```rb
-plugin "cocoapods-binary-cache"
+plugin "cocoapods-binary-artifactory-cache"
 ```
 
 **2.2. Configure `cocoapods-binary-cache`**
@@ -57,8 +53,8 @@ plugin "cocoapods-binary-cache"
 config_cocoapods_binary_cache(
   cache_repo: {
     "default" => {
-      "remote" => "git@cache_repo.git",
-      "local" => "~/.cocoapods-binary-cache/prebuilt-frameworks"
+      "remote" => "https://artifactory.youlocal.net/repo-name/",
+      "local" => "~/.local-cache-path"
     }
   },
   prebuild_config: "Debug"
@@ -88,7 +84,7 @@ $ bundle exec pod binary fetch
 ```
 - Prebuild binary pods
 ```sh
-$ bundle exec pod binary prebuild [--push]
+$ bundle exec pod binary prebuild
 ```
 - Push the prebuilt pods to the cache repo
 ```sh

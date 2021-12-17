@@ -1,5 +1,5 @@
 require_relative "base"
-require_relative "../../cocoapods-binary-cache/dependencies_graph/dependencies_graph"
+require_relative "../../cocoapods-binary-artifactory-cache/dependencies_graph/dependencies_graph"
 
 module PodPrebuild
   class Visualizer < CommandExecutor
