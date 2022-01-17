@@ -6,6 +6,12 @@ module Pod
     class Binary < Command
       class Fetch < Binary
         self.arguments = [CLAide::Argument.new("CACHE-BRANCH", false)]
+        def self.options
+          [
+            ["--repo-update", "Update pod repo before installing"]
+          ].concat(super)
+        end
+
         def initialize(argv)
           super
           unless ENV['ARTIFACTORY_LOGIN'].nil? && ENV['ARTIFACTORY_PASSWORD'].nil?
@@ -28,6 +34,7 @@ module Pod
           )
           @fetcher = PodPrebuild::CacheFetcher.new(
             config: prebuild_config,
+            repo_update: argv.flag?("repo-update")
           )
         end
 

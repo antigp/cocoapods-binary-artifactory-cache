@@ -66,7 +66,9 @@ module PodPrebuild
       args_[:simulator] ||= []
       args_[:device] ||= []
       args_[:default].prepend("BITCODE_GENERATION_MODE=bitcode") if bitcode_enabled?
+      args_[:default].prepend("DEBUG_INFORMATION_FORMAT=dwarf-with-dsym") unless disable_dsym?
       args_[:default].prepend("DEBUG_INFORMATION_FORMAT=dwarf") if disable_dsym?
+      args_[:default].prepend("BUILD_LIBRARY_FOR_DISTRIBUTION=YES")
       args_[:simulator].prepend("ARCHS=x86_64", "ONLY_ACTIVE_ARCH=NO") if simulator == "iphonesimulator"
       args_[:simulator] += args_[:default]
       args_[:device].prepend("ONLY_ACTIVE_ARCH=NO")

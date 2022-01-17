@@ -9,6 +9,7 @@ module PodPrebuild
 
     def initialize(options)
       super(options)
+      @repo_update = options[:repo_update]
     end
 
     def run
@@ -20,7 +21,7 @@ module PodPrebuild
           lockfile: installer.lockfile,
           cache_validation: nil
         )
-
+        @binary_installer.repo_update = @repo_update
         Pod::UI.title("Generate Manifest") do
           @binary_installer.clean_delta_file
           @binary_installer.install!
